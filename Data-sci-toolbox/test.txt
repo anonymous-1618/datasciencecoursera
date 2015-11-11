@@ -1,0 +1,30 @@
+#----------------------------------
+#func.PCA
+#----------------------------------
+#This function loads an data input file (spectra matrix), smooths, 
+#centers and normalizes them. Finally apply the PCA will generate the answer,
+#to the user designated file.
+#
+#Using: Output <- func.PCA('data_filename')
+#
+#All the raw data (input) and the saved output files are located at: 'c:\R_temp'
+#Creat this directory if you dont have it
+#
+function (filein) 
+{
+library(signal)
+
+path <- "C:\\R_temp\\"
+
+name <- paste(path,filein,'.csv',sep='')
+
+raw_data<-read.csv(name, header=FALSE)
+raw_data<-as.matrix(raw_data)
+
+sm_data<-func.smoothing_matrix(raw_data)
+snv_data<-func.SNV_matrix(sm_data)
+
+answer <- prcomp(snv_data)
+answer
+
+}
